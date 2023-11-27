@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guesser Game</title>
+    <!-- Linked css files -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Linked external font-family -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i&display=swap">
+
+</head>
+<body>
+    <!-- Title of the game -->
+    <header>
+        <h1 id="title">Number Guesser Game</h1>
+        <p id="instruction">Pick a number from 1 and 100!</p>
+    </header>
+
+    <!-- Word Guesser Game -->
+    <main>
+
+        <!-- HP Bar -->
+        <div id="hp-bar-container">
+            <label for="hp-bar" id="hp-label">100%</label>
+            <div id="hp-bar"></div>
+        
+        </div>
+
+        <!-- User Guess -->
+        <div id="answer-area">
+            <div id="guess-container">
+                <input type="number" id="guess" required>
+                <div class="label-container">
+                    <label for="guess" id="guess-label">
+                        Enter a number
+                    </label>
+
+                </div>
+                
+            </div>
+
+            <div id="hint-container">
+                <p id="hint"></p>
+            </div>
+
+            <!-- Submit button -->
+            <button id="submit">Guess</button>
+        </div>
+
+    </main>
+
+    <!-- <section id="game-over">
+        
+    </section> -->
+
+</body>
+</html>

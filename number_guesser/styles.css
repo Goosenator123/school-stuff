@@ -1,0 +1,142 @@
+/* Global styles */
+body {
+    font-size: 10px;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    background-color: black;
+}
+
+/* Header styles */
+header {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    background-color: rgb(1, 125, 174);
+    border-radius: 10px;
+    margin: 20px auto;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#title {
+    font-size: 3rem;
+    margin: 10px 0 10px 0;
+}
+
+#instruction {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+
+/* HP bar styles */
+#hp-bar-container {
+    height: 30px;
+    width: 100%;
+    max-width: 90%;
+    display: flex;
+    padding: 5px;
+    background-color: gray;
+    margin: 15px auto;
+}
+
+#hp-bar {
+    width: 100%;
+    height: auto;
+    background-color: greenyellow;
+}
+
+#hp-label {
+    color: greenyellow;
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    background-color: black;
+    border: 2px solid white;
+    box-sizing: border-box;
+}
+
+#answer-area {
+    position: relative;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: auto;
+    background: linear-gradient(180deg, red, purple);
+    color: line;
+    font-size: 1.2rem;
+    padding: 60px 40px 40px 40px;
+    border: 5px solid rgb(129, 129, 129);
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+#guess-container {
+    position: relative;
+    width: 200px;
+    margin-bottom: 20px;
+    /* background-color: black; */
+}
+
+#guess {
+    color: white;
+    width: 100%;
+    height: fit-content;
+    font-size: 1.4rem;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid white;
+}
+
+.label-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    user-select: none;
+    transition: top 0.2s ease-out, font-size 0.2s;
+    font-size: 1.6rem;
+}
+
+label, input, button {
+    cursor:pointer;
+}
+
+#guess:focus + .label-container,
+#guess:valid + .label-container {
+    top: -25px;
+    font-size: 1.2rem;
+}
+
+#hint-container {
+    width: 100%;
+    /* background-color: black; */
+    padding: 10px 0;
+    margin-bottom: 20px;
+}
+
+#hint {
+    margin: 0;
+    height: 19px;
+    font-size: 1rem;
+}
+
+button {
+    width: 100%;
+    height: 30px;
+    color: white;
+    background-color: rgb(194, 0, 220);
+    border: none;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: rgb(225, 0, 255);
+}
