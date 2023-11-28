@@ -65,6 +65,7 @@ header {
     box-sizing: border-box;
 }
 
+/* Answer area styles */
 #answer-area {
     position: relative;
     width: fit-content;
@@ -114,9 +115,6 @@ header {
     cursor: text;
 }
 
-button {
-    cursor:pointer;
-}
 
 #guess:focus + .label-container,
 #guess:valid + .label-container {
@@ -135,6 +133,11 @@ button {
     margin: 0;
     height: 19px;
     font-size: 1rem;
+}
+
+/* Button styles */
+button {
+    cursor:pointer;
 }
 
 button {
