@@ -11,50 +11,67 @@
 
 </head>
 <body>
-    <!-- Title of the game -->
-    <header>
-        <h1 id="title">Number Guesser Game</h1>
-        <p id="instruction">Pick a number from 1 and 100!</p>
-    </header>
 
-    <!-- Word Guesser Game -->
-    <main>
+    <section id="game-container">
 
-        <!-- HP Bar -->
-        <div id="hp-bar-container">
-            <label for="hp-bar" id="hp-label">100%</label>
-            <div id="hp-bar"></div>
-        
-        </div>
-
-        <!-- User Guess -->
-        <div id="answer-area">
-            <div id="guess-container">
-                <input type="number" id="guess" required>
-                <div class="label-container">
-                    <label for="guess" id="guess-label">
-                        Enter a number
-                    </label>
-
-                </div>
+        <!-- Title of the game -->
+        <header>
+            <h1 id="title">Number Guesser Game</h1>
+            <p id="instruction">Pick a number from 1 and 100!</p>
+        </header>
+    
+        <!-- Word Guesser Game -->
+        <main>
+    
+            <!-- Main section -->
+            <section>
                 
-            </div>
-
-            <div id="hint-container">
-                <p id="hint"></p>
-            </div>
-
-            <!-- Submit button -->
-            <button id="submit">Guess</button>
-            <br>
-            <button id="reset">Reset</button>
-        </div>
-
-    </main>
-
-    <!-- <section id="game-over">
+                <!-- User Guess -->
+                <div id="guess-container">
+                    <input type="number" id="guess" required>
+                    <div class="label-container">
+                        <label for="guess" id="guess-label">
+                            Enter a number
+                        </label>
+                        
+                    </div>
         
-    </section> -->
+                    <!-- Hint -->
+                    <div id="hint-container">
+                        <p id="hint">123</p>
+        
+                    </div>
+                    
+                </div>
+    
+                <!-- Submit button -->
+                <div id="button-container">
+                    <button id="submit">Guess</button>
+                    <br>
+                    <button id="reset">Reset</button>
+    
+                </div>
+
+            </section>
+
+            <!-- Hp section -->
+            <section>
+                <!-- HP Bar -->   
+                <div id="hp-bar-container">
+                    <label for="hp-bar" id="hp-label">100%</label>
+                    <div id="hp-bar"></div>
+                
+                </div>
+
+            </section>
+            
+        </main>
+    
+        <!-- <section id="game-over">
+            
+        </section> -->
+        
+    </section>
 
     <!-- Linked js files -->
     <script src="js/check.js"></script>
