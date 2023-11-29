@@ -39,7 +39,7 @@ function checkAnswer() {
             // console.log("lower");
         } else if (guess < answer) {
             hint.textContent = "Higher";
-            hint.style.color = "red";
+            hint.style.color = "orange";
             // console.log("higher");
             decreaseHp();
         } else {
@@ -90,3 +90,13 @@ submit.addEventListener('click', () => {
         setTimeout(resetCooldown, 300);
     }
 });
+
+reset.addEventListener('click', () => {
+    hp = 100;
+    targetHp = 100;
+    cooldown = false; // Set cooldown to avoid submit spam
+    hint.textContent = "";
+    hp_bar.style.width = "100%";
+    hp_label.textContent = "100%";
+    guess.value = ""
+}); // Reset game

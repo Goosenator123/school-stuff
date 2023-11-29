@@ -198,4 +198,5 @@ button:hover {
     font-weight: 600;
     background-color: rgba(255, 255, 255, 0.268);
     box-sizing: border-box;
+    margin: 0;
 }
