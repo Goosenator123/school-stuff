@@ -85,6 +85,10 @@ section {
     width: fit-content;
     /* background-color: gray; */
     padding: 0;
+    /* display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; */
 }
 
 #guess {
@@ -123,7 +127,7 @@ section {
 }
 
 #hint-container {
-    width: 30px;
+    width: fit-content;
     /* background-color: black; */
     padding: 10px 0;
     margin: auto;
@@ -146,7 +150,6 @@ button {
     transition: background-color 0.2s;
     cursor:pointer;
     font-family: pixel;
-    margin-bottom: 5px;
 }
 
 button:hover {
@@ -156,6 +159,10 @@ button:hover {
 #button-container {
     /* background-color: black; */
     padding: 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 /* HP bar styles */
@@ -176,6 +183,7 @@ button:hover {
     width: 100%;
     height: 30px;
     background-color: greenyellow;
+    transition: width 0.3s;
 }
 
 #hp-label {
@@ -188,6 +196,6 @@ button:hover {
     align-items: center;
     font-size: 0.7rem;
     font-weight: 600;
-    background-color: rgba(0, 0, 0, 0.268);
+    background-color: rgba(255, 255, 255, 0.268);
     box-sizing: border-box;
 }
