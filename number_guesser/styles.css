@@ -1,101 +1,85 @@
+/* Root styles */
+:root {
+    --selection-menu: 100;
+    --game-container:-100;
+    --default-border: rgb(191, 191, 191);
+    --left-border: rgb(80, 80, 80);
+}
+
+.start-game {
+    --selection-menu: -100;
+    --game-container: 100;
+}
+
 /* Custom fonts */
 @font-face {
     font-family: pixel;
     src: url('../fonts/8-bit-pusab.ttf') format('truetype');
 }
+
 /* Global styles */
 body {
+    height: fit-content;
     font-size: 10px;
     font-family: pixel, sans-serif;
     color: white;
     background-color: rgb(0, 0, 0);
 }
 
-/* Game Container style */
+
+/*! Game area styles */
+/* Sections style */
 #game-container {
-    width: 50%;
-    min-width: 350px;
-    margin: 30px auto;
-    background-color: #141414;
-    padding: 20px;
-    padding-bottom: 0;
-    border: 5px solid rgb(191, 191, 191);
-    border-left: 5px solid rgb(80, 80, 80);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 891px;
+    min-width: fit-content;
+    background-color: black;
+    z-index: var(--game-container);
 }
 
-/* Header styles */
-header {
-    width: 100%;
-    max-width: 800px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    color: white;
-    background-color: rgb(0, 181, 252);
-    padding: 10px;
-    box-sizing: border-box;
-    border: 5px solid rgb(0, 128, 255);
-    border-left: 5px solid rgb(0, 0, 234);
-}
-
-#title {
-    font-size: 2rem;
-    margin: 10px 0 10px 0;
-}
-
-#instruction {
-    font-size: 1rem;
-    margin: 0;
+#game-section {
+    width: 80%;
+    min-width: fit-content;
+    max-width: 700px;
+    margin: 40px auto;
+    border: 5px solid var(--default-border);
+    border-left: 5px solid var(--left-border);
+    /* background-color: gray; */
+    padding: 60px 20px 30px;
+    align-items: flex-start;
 }
 
 /* Main styles */
-main {
-    width: 100%;
+#game-main {
+    width: 80%;
+    min-width: fit-content;
+    height: fit-content;
+    padding: 20px;
+    border: 5px solid var(--default-border);
+    border-left: 5px solid var(--left-border);
     display: flex;
     flex-direction: column;
     margin: 20px;
 }
 
-/* Sections styles */
-section {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    margin-bottom: 20px;
-}
-
-#game-section {
-    width: 80%;
-    max-width: 600px;
-    min-width: fit-content;
-    margin: 0 auto;
-    border: 5px solid rgb(148, 148, 148);
-    border-left: 5px solid rgb(112, 112, 112);
-    /* background-color: black; */
-    padding: 30px 20px;
-}
-
-
 /* Answer area styles */
 #guess-container {
     position: relative;
     width: fit-content;
+    height: fit-content;
+    margin-right: 40px;
     /* background-color: gray; */
-    padding: 0;
-    /* display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column; */
 }
 
 #guess {
     color: white;
-    width: 200px;
+    width: 340px;
     min-width: 200px;
-    height: 1.4rem;
+    height: 47px;
     font-family: pixel;
     background-color: transparent;
     border: none;
@@ -108,12 +92,14 @@ section {
 
 .label-container {
     position: absolute;
+    width: 340px;
     top: 0;
     left: 5px;
     user-select: none;
-    transition: top 0.2s ease-out, font-size 0.2s;
+    transition: top 0.2s ease-out, left 0.2s ease-out, font-size 0.2s;
     opacity: 0.8;
-    font-size: 0.9rem;
+    font-size: 1.6rem;
+    /* background-color: gray; */
 }
 
 #guess, #guess-label {
@@ -122,8 +108,9 @@ section {
 
 #guess:focus + .label-container,
 #guess:valid + .label-container {
-    top: -20px;
-    font-size: 0.7rem;
+    top: -35px;
+    left: -2px;
+    font-size: 1.2rem;
 }
 
 #hint-container {
@@ -131,38 +118,14 @@ section {
     /* background-color: black; */
     padding: 10px 0;
     margin: auto;
+     text-align: center;
 }
 
 #hint {
     margin: 0;
-    height: 19px;
-    font-size: 0.7rem;
-}
-
-/* Button styles */
-button {
-    width: 100%;
-    height: 30px;
-    color: white;
-    background-color: rgb(205, 0, 233);
-    border: 3px solid rgb(171, 0, 171);
-    border-left: 3px solid rgb(90, 0, 90);
-    transition: background-color 0.2s;
-    cursor:pointer;
-    font-family: pixel;
-}
-
-button:hover {
-    background-color: rgb(231, 51, 255);
-}
-
-#button-container {
-    /* background-color: black; */
-    padding: 0 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    width: 340px;
+    height: fit-content;
+    font-size: 1.2rem;
 }
 
 /* HP bar styles */
@@ -170,18 +133,17 @@ button:hover {
     position: relative;
     height: fit-content;
     width: 100%;
-    max-width: 600px;
+    max-width: 1200px;
     display: flex;
     border: 5px solid rgb(112, 112, 112);
     border-left: 5px solid rgb(55, 55, 55);
-    margin: 15px auto;
     margin-bottom: 0;
     box-sizing: border-box;
 }
 
 #hp-bar {
     width: 100%;
-    height: 30px;
+    height: 50px;
     background-color: greenyellow;
     transition: width 0.3s;
 }
@@ -189,14 +151,185 @@ button:hover {
 #hp-label {
     position: absolute;
     color: black;
-    width: 60px;
-    height: 30px;
+    width: 120px;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 0.7rem;
+    font-size: 1.6rem;
     font-weight: 600;
     background-color: rgba(255, 255, 255, 0.268);
     box-sizing: border-box;
+    margin: 0;
+}
+
+/* Button styles */
+#submit {
+    background-color: rgb(205, 0, 233);
+    border: 3px solid rgb(171, 0, 171);
+    border-left: 3px solid rgb(90, 0, 90);
+    font-size: 1.6rem;
+}
+
+#submit:hover {
+    background-color: rgb(231, 51, 255);
+}
+
+
+#button-container {
+    /* background-color: black; */
+    padding: 0 5px;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+/*! Menu area styles */
+/* Sections area styles */
+#selection-menu {
+    position:absolute;
+    /* left: 50%;
+    width: 94vw;
+    transform: translate(-50%); */
+    min-height: 891px;
+    min-width: fit-content;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: black;
+    flex-direction: column;
+    padding: 10px;
+    z-index: var(--selection-menu);
+}
+
+#difficulty-section, #highscore-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 5px solid var(--default-border);
+    border-left: 5px solid var(--left-border);
+}
+
+#highscore-section {
+    height: 30vh;
+    min-height: 200px;
+    width: 20vw;
+    min-width: fit-content;
+    max-width: 400px;
+    padding: 10px 20px 0px;
+}
+
+/* Menu styles */
+#menu-main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 50px;
+}
+
+/* Button styles */
+.menu-buttons {
+    height: 100px;
+    width: 35vw;
+    max-width: 800px;
+    min-width: fit-content;
+    margin: 40px 80px;
+    font-size: 1.6rem;
+}
+
+#easy {
+    background-color: rgb(18, 153, 0);
+    border: 5px solid rgb(0, 205, 0);
+    border-left: 5px solid rgba(0, 47, 0, 0.374);
+}
+
+#normal {
+    background-color: rgba(255, 166, 0, 0.862);
+    border: 5px solid rgb(255, 174, 0);
+    border-left: 5px solid rgba(73, 46, 0, 0.511);
+}
+
+#hard {
+    background-color: rgba(255, 0, 0, 0.798);
+    border: 5px solid rgb(255, 0, 0);
+    border-left: 5px solid rgba(73, 0, 0, 0.511);
+}
+
+#easy:hover {
+    background-color: rgb(0, 176, 47);
+}
+
+#normal:hover {
+    background-color: rgba(255, 166, 0, 0.952);
+}
+
+#hard:hover {
+    background-color: rgba(255, 0, 0, 0.935);
+}
+
+/* Highscore styles */
+#highscore-label, #highscore {
+    padding: 10px;
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+#highscore-label {
+    border: 5px solid rgb(0, 81, 255);
+    border-left: 5px solid rgb(0, 36, 113);
+    width: 20vw;
+    max-width: 225px;
+    min-width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.6rem;
+    color: yellow;
+    background-color: rgba(0, 81, 255, 0.652);
+}
+
+/*! Elements styles */
+/* Button styles */
+button {
+    color: white;
+    transition: background-color 0.25s;
+    cursor:pointer;
+    font-family: pixel;
+}
+
+/* Sections styles */
+section {
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: space-evenly;
+}
+
+
+/* Header styles */
+header {
+    width: 70%;
+    min-width: fit-content;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    background-color: rgb(0, 181, 252);
+    padding: 20px 30px;
+    box-sizing: border-box;
+    border: 5px solid rgb(0, 128, 255);
+    border-left: 5px solid rgb(0, 0, 234);
+}
+
+#title {
+    font-size: 2.5rem;
+    margin: 10px 0 10px 0;
+}
+
+#sub-title {
+    font-size: 1.4rem;
     margin: 0;
 }

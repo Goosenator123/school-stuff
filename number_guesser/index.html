@@ -10,16 +10,16 @@
 <body>
 
     <section id="game-container">
-
-        <!-- Title of the game -->
-        <header>
-            <h1 id="title">Number Guesser Game</h1>
-            <p id="instruction">Pick a number from 1 and 100!</p>
-        </header>
-    
+        
         <!-- Word Guesser Game -->
-        <main>
-    
+        <main id="game-main">
+            
+            <!-- Title of the game -->
+            <header id="game-header">
+                <h1 id="title">Number Guesser Game</h1>
+                <p id="sub-title">Pick a number from 1 and 100!</p>
+            </header>
+            
             <!-- Main section -->
             <section id="game-section">
 
@@ -45,15 +45,14 @@
                 <!-- Submit button -->
                 <div id="button-container">
                     <button id="submit">Guess</button>
-                    <br>
-                    <button id="reset">Reset</button>
-    
+
                 </div>
 
             </section>
 
             <!-- Hp section -->
             <section>
+
                 <!-- HP Bar -->   
                 <div id="hp-bar-container">
                     <p id="hp-label">100%</p>
@@ -63,12 +62,41 @@
 
             </section>
             
+            <!-- <button id="reset">Reset</button> -->
+
         </main>
+
+    </section>
     
-        <!-- <section id="game-over">
-            
-        </section> -->
-        
+
+    <!-- Selection menu -->
+    <section id="selection-menu">
+        <header>
+            <h1 id="title">Number Guesser Game</h1>
+            <p id="sub-title">Pick a difficulty!</p>
+        </header>
+
+        <main id="menu-main">
+
+            <!-- Choosing difficulty section -->
+            <section id="difficulty-section">
+                <button id="easy" class="menu-buttons">Easy</button>
+                <button id="normal" class="menu-buttons">Normal</button>
+                <button id="hard" class="menu-buttons">Hard</button>
+
+            </section>
+
+            <!-- Highscore section -->
+            <section id="highscore-section">
+                <p id="highscore-label">
+                    HIGH <br>
+                    <span>SCORE</span></p>
+                <p id="highscore">0 points</p>
+
+            </section>
+
+        </main>
+
     </section>
 
     <!-- Linked js files -->
