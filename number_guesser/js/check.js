@@ -18,7 +18,7 @@ let cooldown = false; // Set cooldown to avoid submit spam
 
 // Audio
 let bgMusic = new Audio("../audio/8bitMusic.mp3"); // Set background audio
-
+bgMusic.loop = true;
 
 // Testing Math object
 // submit.addEventListener('click', () => {
@@ -87,8 +87,8 @@ function decreaseHp() {
     }
 }
 
-// Start game
-function startGame() {
+// Start game / Restart game
+function toggleGame() {
     document.body.classList.toggle('start-game');
 }
 
@@ -131,23 +131,28 @@ reset.addEventListener('click', () => {
     hp_bar.style.width = "100%";
     hp_label.textContent = "100%";
     guess.value = ""
+    toggleGame();
+    bgMusic.pause();
 }); // Reset game
 
 // Setting difficulty
 easyMode.addEventListener('click', () => {
+    bgMusic.currentTime = 0;
     dmg = 10;
     bgMusic.play();
-    startGame();
+    toggleGame();
 })
 
 normalMode.addEventListener('click', () => {
+    bgMusic.currentTime = 0;
     dmg = 20;
     bgMusic.play();
-    startGame();
+    toggleGame();
 })
 
 hardMode.addEventListener('click', () => {
+    bgMusic.currentTime = 0;
     dmg = 30;
     bgMusic.play();
-    startGame();
+    toggleGame();
 })
