@@ -24,6 +24,7 @@ body {
     font-family: pixel, sans-serif;
     color: white;
     background-color: rgb(0, 0, 0);
+    user-select: none;
 }
 
 
