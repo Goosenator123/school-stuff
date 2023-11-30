@@ -5,11 +5,19 @@ const hint = document.getElementById("hint");
 const submit = document.getElementById("submit");
 const reset = document.getElementById("reset");
 
+// Get difficulty buttons' references
+const easyMode = document.getElementById("easy");
+const normalMode = document.getElementById("normal");
+const hardMode = document.getElementById("hard");
+
 // Set values
+let dmg = 0; // Set dmg
 let hp = 100;
 let targetHp = 100;
 let cooldown = false; // Set cooldown to avoid submit spam
-let audio = new Audio("../audio/8bitMusic.mp3"); // Set background audio
+
+// Audio
+let bgMusic = new Audio("../audio/8bitMusic.mp3"); // Set background audio
 
 
 // Testing Math object
@@ -53,41 +61,48 @@ function checkAnswer() {
 // Decrease HP bar function
 function decreaseHp() {
     // Set local variables
-    const dmg = 10; // Set dmg
     targetHp -= dmg;
-    hp_bar.style.width = `${targetHp}%` // Change hp_bar length
 
     // Decrease label gradually function
     const decreaseLabel = setInterval(() => {
         // Check if hp is at targetHp
-        if (hp != targetHp) {
-            hp -= 1;
-            hp_label.textContent = `${hp}%`;
+        if (hp != targetHp) {     
+            if (hp >0) {
+                hp -= 1;
+                hp_label.textContent = `${hp}%`;
+                hp_bar.style.width = `${hp}%`; // Change hp_bar length
+            }    
         } else {
             clearInterval(decreaseLabel) // Stops the interval
         }
     }, 30);
 
     // Display death message upon death
-    if (targetHp === 0) {
+    if (targetHp <= 0) {
         setTimeout(() => {
             hint.textContent = "You're Dead!";
-            hint.style.color = "red"
-        }, 400)
+            hint.style.color = "red";
+            bgMusic.pause();
+        }, 500)
     }
 }
 
-// Play pause audio
-function playBackground() {
-    if (audio.paused) {
-        audio.play();
-        audio.volume = 0.5; // Setting volume
-        console.log("playing");
-    } else {
-        audio.pause();
-        console.log("stopped");
-    }
+// Start game
+function startGame() {
+    document.body.classList.toggle('start-game');
 }
+
+// Play pause audio
+// function playBackground() {
+//     if (bgMusic.paused) {
+//     bgMusic.play();
+//         bgMusic.volume = 0.5; // Setting volume
+//         console.log("playing");
+//     } else {
+//         bgMusic.pause();
+//         console.log("stopped");
+//     }
+// }
 
 // Reset cooldown
 function resetCooldown() {
@@ -97,16 +112,16 @@ function resetCooldown() {
 // Events
 submit.addEventListener('click', () => {
     // Check if user is dead or cooldown is on
-    if (!cooldown && targetHp != 0) {
+    if (!cooldown && targetHp >= 0) {
         checkAnswer();
         cooldown = true;
         setTimeout(resetCooldown, 300);
     }
 });
 
-submit.addEventListener('click', () => {
-    playBackground();
-});
+// submit.addEventListener('click', () => {
+//     playBackground();
+// });
 
 reset.addEventListener('click', () => {
     hp = 100;
@@ -117,3 +132,22 @@ reset.addEventListener('click', () => {
     hp_label.textContent = "100%";
     guess.value = ""
 }); // Reset game
+
+// Setting difficulty
+easyMode.addEventListener('click', () => {
+    dmg = 10;
+    bgMusic.play();
+    startGame();
+})
+
+normalMode.addEventListener('click', () => {
+    dmg = 20;
+    bgMusic.play();
+    startGame();
+})
+
+hardMode.addEventListener('click', () => {
+    dmg = 30;
+    bgMusic.play();
+    startGame();
+})
