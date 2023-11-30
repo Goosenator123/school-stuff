@@ -9,6 +9,7 @@ const reset = document.getElementById("reset");
 let hp = 100;
 let targetHp = 100;
 let cooldown = false; // Set cooldown to avoid submit spam
+let audio = new Audio("../audio/8bitMusic.mp3"); // Set background audio
 
 
 // Testing Math object
@@ -76,6 +77,18 @@ function decreaseHp() {
     }
 }
 
+// Play pause audio
+function playBackground() {
+    if (audio.paused) {
+        audio.play();
+        audio.volume = 0.5; // Setting volume
+        console.log("playing");
+    } else {
+        audio.pause();
+        console.log("stopped");
+    }
+}
+
 // Reset cooldown
 function resetCooldown() {
     cooldown = false;
@@ -89,6 +102,10 @@ submit.addEventListener('click', () => {
         cooldown = true;
         setTimeout(resetCooldown, 300);
     }
+});
+
+submit.addEventListener('click', () => {
+    playBackground();
 });
 
 reset.addEventListener('click', () => {
