@@ -2,6 +2,7 @@
 :root {
     --selection-menu: 100;
     --game-container:-100;
+    --game-over-screen: -100;
     --default-border: rgb(191, 191, 191);
     --left-border: rgb(80, 80, 80);
 }
@@ -9,6 +10,13 @@
 .start-game {
     --selection-menu: -100;
     --game-container: 100;
+    --game-over-screen: -100;
+}
+
+.end-game {
+    --selection-menu: -100;
+    --game-container: -100;
+    --game-over-screen: 100;
 }
 
 /* Custom fonts */
@@ -292,6 +300,67 @@ body {
     background-color: rgba(0, 81, 255, 0.652);
 }
 
+/*! Game Over area styles */
+#game-over-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 891px;
+    min-width: fit-content;
+    background-color: black;
+    z-index: var(--game-over-screen);
+}
+
+#game-over-main {
+    position: relative;
+    width: 70vw;
+    min-width: fit-content;
+    padding: 20px;
+    border: 5px solid white;
+    margin:  5px auto;
+    display: flex;
+    flex-direction: column;
+}
+
+#game-over-title {
+    font-size: 7rem;
+    text-align: center;
+}
+
+#score-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#score-label {
+    font-size: 1.6rem;
+}
+
+#game-over-buttons {
+    width: 100%;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%);
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#game-over-buttons button {
+    border: 5px solid var(--default-border);
+    border-left: 5px solid var(--left-border);
+    width: 20vw;
+    min-width: fit-content;
+    padding: 10px 20px;
+    background-color: black;
+}
+
+#game-over-buttons button:hover {
+    background-color: rgb(31, 31, 31);
+}
+
 /*! Elements styles */
 /* Button styles */
 button {
@@ -333,4 +402,19 @@ header {
 #sub-title {
     font-size: 1.4rem;
     margin: 0;
+}
+
+/* Google icon styles */
+.material-symbols-outlined.icon-button1,
+.material-symbols-outlined.icon-button2 {
+    font-size: 100px;
+    transition: transform 0.4s, font-weight 0.4s;
+}
+
+#try-again:hover .material-symbols-outlined.icon-button2 {
+    transform: rotate(-45deg);
+}
+
+#reset:hover .material-symbols-outlined.icon-button1 {
+    font-weight: 700;
 }
