@@ -3,7 +3,8 @@ const hp_bar = document.getElementById("hp-bar");
 const hp_label = document.getElementById("hp-label");
 const hint = document.getElementById("hint");
 const submit = document.getElementById("submit");
-const reset = document.getElementById("reset");
+const menu = document.getElementById("menu");
+const restart = document.getElementById("try-again");
 
 // Get difficulty buttons' references
 const easyMode = document.getElementById("easy");
@@ -15,7 +16,6 @@ let dmg = 0; // Set dmg
 let hp = 100;
 let targetHp = 100;
 let cooldown = false; // Set cooldown to avoid submit spam
-let guess = "";
 
 // Audio
 let bgMusic = new Audio("../audio/prayerInC.mp3"); // Set background audio
@@ -52,13 +52,17 @@ function decreaseHp() {
             hint.style.color = "red";
             bgMusic.pause();
             submit.Disabled = true;
+            setTimeout(() => {
+                stopGame();
+                reset();
+            }, 500);
         }, 500);
     }
 }
 
 // checkAnswer function
 function checkAnswer() {
-    guess = document.getElementById("guess").value;
+    const guess = document.getElementById("guess").value;
     const answer = 10; // Set test answer
 
     // Check if valid input
@@ -94,10 +98,27 @@ function toggleGame() {
     document.body.classList.toggle('start-game');
 }
 
+function stopGame() {
+    document.body.classList.toggle('end-game');
+}
+
 // Reset cooldown
 function resetCooldown() {
     cooldown = false;
 }
+
+// Reset game
+function reset() {
+    const guess = document.getElementById("guess");
+    guess.value = "";
+    hp = 100;
+    targetHp = 100;
+    cooldown = false;
+    hint.textContent = "";
+    hp_bar.style.width = "100%";
+    hp_label.textContent = "100%";
+}
+
 
 //! Events
 submit.addEventListener('click', () => {
@@ -110,36 +131,34 @@ submit.addEventListener('click', () => {
     }
 });
 
-reset.addEventListener('click', () => {
-    hp = 100;
-    targetHp = 100;
-    cooldown = false; // Set cooldown to avoid submit spam
-    hint.textContent = "";
-    hp_bar.style.width = "100%";
-    hp_label.textContent = "100%";
-    guess = "";
+menu.addEventListener('click', () => {
+    stopGame();
     toggleGame();
-    bgMusic.pause();
-    submit.Disabled = false;
-}); // Reset game
+});
+
+restart.addEventListener('click', () => {
+    stopGame();
+    bgMusic.currentTime = 0.3;
+    bgMusic.play();
+})
 
 // Setting difficulty
 easyMode.addEventListener('click', () => {
-    bgMusic.currentTime = 0;
+    bgMusic.currentTime = 0.3;
     dmg = 10;
     bgMusic.play();
     toggleGame();
 })
 
 normalMode.addEventListener('click', () => {
-    bgMusic.currentTime = 0;
+    bgMusic.currentTime = 0.3;
     dmg = 13;
     bgMusic.play();
     toggleGame();
 })
 
 hardMode.addEventListener('click', () => {
-    bgMusic.currentTime = 0;
+    bgMusic.currentTime = 0.3;
     dmg = 17;
     bgMusic.play();
     toggleGame();
