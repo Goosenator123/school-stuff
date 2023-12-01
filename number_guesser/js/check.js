@@ -19,6 +19,7 @@ let cooldown = false; // Set cooldown to avoid submit spam
 // Audio
 let bgMusic = new Audio("../audio/8bitMusic.mp3"); // Set background audio
 bgMusic.loop = true;
+bgMusic.volume = 0.5;
 
 // Testing Math object
 // submit.addEventListener('click', () => {
