@@ -36,7 +36,7 @@
     top: 0;
     left: 0;
     background-image: url(../../audio/background_img.jpeg);
-    background-attachment: fixed;
+    /* background-attachment: fixed; */
     background-size: cover;
     background-position: center center;
 }
@@ -82,7 +82,7 @@ header {
     align-items: center;
     flex-direction: column;
     /* background-color: #9c27b0; */
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(1px);
     background: rgba(211, 40, 230, 0.402);
     padding: 20px 40px;
     box-sizing: border-box;
@@ -120,5 +120,5 @@ article {
 }
 
 #menu-main article, #game-main, #game-over-main {
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(5px);
 }
