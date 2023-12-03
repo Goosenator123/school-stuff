@@ -5,6 +5,7 @@ const hint = document.getElementById("hint");
 const submit = document.getElementById("submit");
 const menu = document.getElementById("menu");
 const restart = document.getElementById("try-again");
+const gameOverScore = document.getElementById("game-over-score-container");
 
 // Get difficulty buttons' references
 const easyMode = document.getElementById("easy");
@@ -15,15 +16,31 @@ const hardMode = document.getElementById("hard");
 let dmg = 0; // Set dmg
 let hp = 100;
 let targetHp = 100;
-let cooldown = false; // Set cooldown to avoid submit spam
+let submitCooldown = false; // Set cooldown to avoid submit spam
+let gameOverCooldown = false;
+let answer = 0;
 
 // Audio
 let bgMusic = new Audio("../audio/prayerInC.mp3"); // Set background audio
 let dmgSound = new Audio("../audio/undertale-dmg.mp3");
+let correctSound = new Audio("../audio/8bitSuccess.mp3");
+let deadSound = new Audio("../audio/gameOver.mp3")
 bgMusic.loop = true;
-bgMusic.volume = 0.5;
+bgMusic.volume = 0.3;
+dmgSound.volume = 0.6;
 
-//! Functions
+
+//! Functions ------------------------------------------
+
+// Changing windows arrow functions
+const startGame = () => {
+    document.body.classList.toggle('start-game');
+}
+
+const stopGame = () => {
+    document.body.classList.toggle('end-game');
+}
+
 // Decrease HP function
 function decreaseHp() {
     // Set local variables
@@ -45,17 +62,24 @@ function decreaseHp() {
         }
     }, 20);
 
-    // Display death message upon death
+    // Check if dead
+    checkDead();
+}
+
+// When dead function
+function checkDead() {
     if (targetHp <= 0) {
         setTimeout(() => {
-            hint.textContent = "You're Dead!";
-            hint.style.color = "red";
+            // hint.textContent = "You're Dead!";
+            // hint.style.color = "red";
             bgMusic.pause();
-            submit.Disabled = true;
+
             setTimeout(() => {
                 stopGame();
                 reset();
-            }, 500);
+                deadSound.currentTime = 0;
+                deadSound.play();
+            }, 100);
         }, 500);
     }
 }
@@ -63,7 +87,6 @@ function decreaseHp() {
 // checkAnswer function
 function checkAnswer() {
     const guess = document.getElementById("guess").value;
-    const answer = 10; // Set test answer
 
     // Check if valid input
     if (guess < 1 || guess > 100 || guess === "") {
@@ -77,34 +100,31 @@ function checkAnswer() {
             hint.textContent = "Lower";
             hint.style.color = "aqua";
             decreaseHp();
-            return true;
+            // return true;
             // console.log("lower");
         } else if (guess < answer) {
             hint.textContent = "Higher";
             hint.style.color = "orange";
             decreaseHp();
-            return true;
+            // return true;
             // console.log("higher");
         } else {
-            hint.textContent = "You guessed correct!";
+            hint.textContent = "Correct!";
             hint.style.color = "greenyellow";
-            return false;
+            correctSound.currentTime = 0;
+            correctSound.play();
+            setTimeout(reset, 600);
+            // return false;
         }
     }
 }
 
-// Start game / Restart game
-function toggleGame() {
-    document.body.classList.toggle('start-game');
-}
-
-function stopGame() {
-    document.body.classList.toggle('end-game');
-}
-
-// Reset cooldown
-function resetCooldown() {
-    cooldown = false;
+// Setting answer function
+function setAnswer() {
+    const number = Math.round(Math.random() * 100);
+    answer = number;
+    console.log(number);
+    return number
 }
 
 // Reset game
@@ -113,7 +133,7 @@ function reset() {
     guess.value = "";
     hp = 100;
     targetHp = 100;
-    cooldown = false;
+    submitCooldown = false;
     hint.textContent = "";
     hp_bar.style.width = "100%";
     hp_label.textContent = "100%";
@@ -122,24 +142,29 @@ function reset() {
 
 //! Events
 submit.addEventListener('click', () => {
-    // Check if user is dead or cooldown is on
-    if (!cooldown && targetHp > 0) {
+    // Check if user is dead or submitCooldown is on
+    if (!submitCooldown && targetHp > 0) {
         checkAnswer();
-        cooldown = true;
-        setTimeout(resetCooldown, 300);
+        submitCooldown = true;
+        setTimeout(() => {
+            submitCooldown = false; // Reset submitCooldown
+        }, 300);
         // console.log(targetHp);
     }
 });
 
 menu.addEventListener('click', () => {
+    deadSound.pause();
     stopGame();
-    toggleGame();
+    startGame();
 });
 
 restart.addEventListener('click', () => {
+    deadSound.pause();
     stopGame();
     bgMusic.currentTime = 0.3;
     bgMusic.play();
+    setAnswer();
 })
 
 // Setting difficulty
@@ -147,19 +172,22 @@ easyMode.addEventListener('click', () => {
     bgMusic.currentTime = 0.3;
     dmg = 10;
     bgMusic.play();
-    toggleGame();
+    startGame();
+    setAnswer();
 })
 
 normalMode.addEventListener('click', () => {
     bgMusic.currentTime = 0.3;
     dmg = 13;
     bgMusic.play();
-    toggleGame();
+    startGame();
+    setAnswer();
 })
 
 hardMode.addEventListener('click', () => {
     bgMusic.currentTime = 0.3;
     dmg = 17;
     bgMusic.play();
-    toggleGame();
+    startGame();
+    setAnswer();
 })
