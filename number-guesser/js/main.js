@@ -5,20 +5,24 @@ const hint = document.getElementById("hint");
 const submit = document.getElementById("submit");
 const menu = document.getElementById("menu");
 const restart = document.getElementById("try-again");
-const gameOverScore = document.getElementById("game-over-score-container");
+const score = document.getElementById("score");
+const gameOverScore = document.getElementById("game-over-score");
 
 // Get difficulty buttons' references
 const easyMode = document.getElementById("easy");
 const normalMode = document.getElementById("normal");
 const hardMode = document.getElementById("hard");
 
-// Set values
+// Set global values
 let dmg = 0; // Set dmg
-let hp = 100;
-let targetHp = 100;
-let submitCooldown = false; // Set cooldown to avoid submit spam
-let gameOverCooldown = false;
-let answer = 0;
+let hp = 100; // Set hp
+let targetHp = 100; // Set target hp
+let submitCooldown = false; // Set submitCooldown to avoid submit spam
+let answer = 0; // Set answer
+let points = 0; // Set points
+let targetPoints = 0; // Set points' target
+let addPoints = 0; // Set points to add
+let toAdd = 0; // Set points that will be added gradually per interval
 
 // Audio
 let bgMusic = new Audio("../audio/prayerInC.mp3"); // Set background audio
@@ -48,17 +52,24 @@ function decreaseHp() {
     dmgSound.currentTime = 0;
     dmgSound.play();
 
-    // Decrease label gradually function
+    // Decrease hp gradually with setInterval() function
     const decreaseLabel = setInterval(() => {
+
         // Check if hp is at targetHp
         if (hp != targetHp) {     
-            if (hp >0) {
+
+            // Check if hp is below 0
+            if (hp > 0) {
+
+                // Increase hp value
                 hp -= 1;
+
+                // Decrease hp_bar and hp_label gradually
                 hp_label.textContent = `${hp}%`;
-                hp_bar.style.width = `${hp}%`; // Change hp_bar length
+                hp_bar.style.width = `${hp}%`;
             }    
         } else {
-            clearInterval(decreaseLabel) // Stops the interval
+            clearInterval(decreaseLabel) // Stops the interval if hp is at targetHp
         }
     }, 20);
 
@@ -68,17 +79,24 @@ function decreaseHp() {
 
 // When dead function
 function checkDead() {
+
+    // Check if targetHp is below 0
     if (targetHp <= 0) {
+
+        // Execute after a given time
         setTimeout(() => {
             // hint.textContent = "You're Dead!";
             // hint.style.color = "red";
-            bgMusic.pause();
+            bgMusic.pause(); // Stop the bgMusic
 
+            // Execute after a given time
             setTimeout(() => {
-                stopGame();
-                reset();
-                deadSound.currentTime = 0;
-                deadSound.play();
+                gameOverScore.textContent = `${points}`;
+                resetPoints();
+                stopGame(); // Display gameOver screen
+                reset(); // Reset all values
+                deadSound.currentTime = 0; // Set gameOver music to the beginning
+                deadSound.play(); // Play game over music
             }, 100);
         }, 500);
     }
@@ -86,6 +104,7 @@ function checkDead() {
 
 // checkAnswer function
 function checkAnswer() {
+    // Get guess value from HTML input
     const guess = document.getElementById("guess").value;
 
     // Check if valid input
@@ -95,25 +114,53 @@ function checkAnswer() {
         // console.log("invalid");
     } else {
 
-        // Check if guess is correct
+        // Check if guess is above right answer
         if (guess > answer) {
             hint.textContent = "Lower";
             hint.style.color = "aqua";
             decreaseHp();
             // return true;
             // console.log("lower");
+        
+        // Check if guess is below right answer
         } else if (guess < answer) {
             hint.textContent = "Higher";
             hint.style.color = "orange";
             decreaseHp();
             // return true;
             // console.log("higher");
+
+        // Execute if guess is corret
         } else {
             hint.textContent = "Correct!";
             hint.style.color = "greenyellow";
-            correctSound.currentTime = 0;
-            correctSound.play();
-            setTimeout(reset, 600);
+            correctSound.currentTime = 0; // Set correctSound to the beginning
+            correctSound.play(); // Play correctSound
+
+            // Set targetPoints
+            targetPoints += addPoints;
+
+            // Increase  gradually score with setInterval() function
+            const setPoints = setInterval(() => {
+
+                // Check if points equal targetPoints
+                if (points != targetPoints) {
+                    // Increase poitns value
+                    points += toAdd;
+
+                    // Increase score gradually
+                    score.textContent = `${points}`;
+                } else {
+                    clearInterval(setPoints); // Stop interval if poitns is at targetPoints
+                }
+
+            }, 0.1);
+
+            // Execute after a given time
+            setTimeout(() => {
+                setAnswer(); // Change answer
+                reset(); // Reset hp bar
+            }, 600);
             // return false;
         }
     }
@@ -121,31 +168,43 @@ function checkAnswer() {
 
 // Setting answer function
 function setAnswer() {
+    // Set random full number from 1 to 100
     const number = Math.round(Math.random() * 100);
+
+    // Assign random number to answer
     answer = number;
     console.log(number);
-    return number
 }
 
-// Reset game
+// Reset varaible function
 function reset() {
+    // Clear input
     const guess = document.getElementById("guess");
-    guess.value = "";
-    hp = 100;
-    targetHp = 100;
-    submitCooldown = false;
-    hint.textContent = "";
-    hp_bar.style.width = "100%";
-    hp_label.textContent = "100%";
+    guess.value = ""; 
+
+    hp = 100; // Reset hp
+    targetHp = 100; // Reset targetHp
+    submitCooldown = false; // Reset cooldown for submit button
+    hint.textContent = ""; // Reset hint
+    hp_bar.style.width = "100%"; // Reset hp_bar
+    hp_label.textContent = "100%"; // Reset hp_label
+    score.textContent = "0"; // Reset score
 }
 
+// Reset score funciton
+function resetPoints() {
+    points = 0; // Reset points
+    targetPoints = 0; // Reset points' target
+}
 
 //! Events
 submit.addEventListener('click', () => {
     // Check if user is dead or submitCooldown is on
     if (!submitCooldown && targetHp > 0) {
-        checkAnswer();
-        submitCooldown = true;
+        checkAnswer(); // Check Answer
+        submitCooldown = true; // Set submitCooldown
+
+        // Execute after a given time
         setTimeout(() => {
             submitCooldown = false; // Reset submitCooldown
         }, 300);
@@ -169,25 +228,31 @@ restart.addEventListener('click', () => {
 
 // Setting difficulty
 easyMode.addEventListener('click', () => {
-    bgMusic.currentTime = 0.3;
-    dmg = 10;
-    bgMusic.play();
-    startGame();
-    setAnswer();
+    bgMusic.currentTime = 0.3; // Set bgMusic to beginning
+    dmg = 10; // Set easy mode dmg
+    addPoints = 100; // Set easy mode points
+    toAdd = 1;
+    bgMusic.play(); // Play bgMusic
+    startGame(); // Start game
+    setAnswer(); // Set answer
 })
 
 normalMode.addEventListener('click', () => {
-    bgMusic.currentTime = 0.3;
-    dmg = 13;
-    bgMusic.play();
-    startGame();
-    setAnswer();
+    bgMusic.currentTime = 0.3; // Set bgMusic to beginning
+    dmg = 13; // Set normal mode dmg
+    addPoints = 200; // Set normal mode points
+    toAdd = 2;
+    bgMusic.play(); // Play bgMusic
+    startGame(); // Start game
+    setAnswer(); // Set answer
 })
 
 hardMode.addEventListener('click', () => {
-    bgMusic.currentTime = 0.3;
-    dmg = 17;
-    bgMusic.play();
-    startGame();
-    setAnswer();
+    bgMusic.currentTime = 0.3; // Set bgMusic to beginning
+    dmg = 17; // Set hard mode dmg
+    addPoints = 400; // Set hard mode points
+    toAdd = 4;
+    bgMusic.play(); // Play bgMusic
+    startGame(); // Start game
+    setAnswer(); // Set answer
 })

@@ -141,6 +141,7 @@
 #score-label {
     margin: 0 0 10px;
     color: yellow;
+    font-weight: 700;
 }
 
 #score {
