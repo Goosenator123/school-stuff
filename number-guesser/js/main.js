@@ -5,6 +5,7 @@ const hint = document.getElementById("hint");
 const submit = document.getElementById("submit");
 const menu = document.getElementById("menu");
 const restart = document.getElementById("try-again");
+const highScore = document.getElementById("highscore");
 const score = document.getElementById("score");
 const gameOverScore = document.getElementById("game-over-score");
 
@@ -92,7 +93,8 @@ function checkDead() {
             // Execute after a given time
             setTimeout(() => {
                 gameOverScore.textContent = `${points}`;
-                resetPoints();
+                storeScore(); // Store score in local storage
+                resetPoints(); // Reset score
                 stopGame(); // Display gameOver screen
                 reset(); // Reset all values
                 deadSound.currentTime = 0; // Set gameOver music to the beginning
@@ -166,7 +168,40 @@ function checkAnswer() {
     }
 }
 
-// Setting answer function
+// Storing score in local storage function
+function storeScore() {
+    // Get score
+    let userScore = targetPoints;
+
+    // Check if local storage already has values / else create an array
+    let storedScores = JSON.parse(localStorage.getItem("score")) || [];
+
+    // Add the new value to the array
+    storedScores.push(Number(userScore));
+
+    // Store the updated array in local storage
+    localStorage.setItem('score', JSON.stringify(storedScores));
+}
+
+// Display Highest score obtained
+function displayHighScore() {
+    // Retrieve score from local storage / else create empty array
+    const storedScores = JSON.parse(localStorage.getItem('values')) || [];
+
+    // Check if array retrieved is empty or not
+    if (storedScores.length > 0) {
+        // Find highest score with Math.max(...)
+        const biggestScore = Math.max(...storedScores);
+
+        // Display highest score in designated element
+        highScore.textContent = `${biggestScore} points`;
+    } else {
+        // Display score of 0 when no score stored
+        highScore.textContent = `0 points`;
+    }
+}
+
+// Set answer function
 function setAnswer() {
     // Set random full number from 1 to 100
     const number = Math.round(Math.random() * 100);
@@ -198,6 +233,7 @@ function resetPoints() {
 }
 
 //! Events
+// Submit button
 submit.addEventListener('click', () => {
     // Check if user is dead or submitCooldown is on
     if (!submitCooldown && targetHp > 0) {
@@ -212,6 +248,7 @@ submit.addEventListener('click', () => {
     }
 });
 
+// Game Over buttons' functions
 menu.addEventListener('click', () => {
     deadSound.pause();
     stopGame();
