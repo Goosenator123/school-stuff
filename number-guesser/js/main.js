@@ -138,6 +138,7 @@ function checkAnswer() {
             hint.style.color = "greenyellow";
             correctSound.currentTime = 0; // Set correctSound to the beginning
             correctSound.play(); // Play correctSound
+            setAnswer(); // Change answer
 
             // Set targetPoints
             targetPoints += addPoints;
@@ -160,7 +161,6 @@ function checkAnswer() {
 
             // Execute after a given time
             setTimeout(() => {
-                setAnswer(); // Change answer
                 reset(); // Reset hp bar
             }, 600);
             // return false;
@@ -186,7 +186,7 @@ function storeScore() {
 // Display Highest score obtained
 function displayHighScore() {
     // Retrieve score from local storage / else create empty array
-    const storedScores = JSON.parse(localStorage.getItem('values')) || [];
+    const storedScores = JSON.parse(localStorage.getItem('score')) || [];
 
     // Check if array retrieved is empty or not
     if (storedScores.length > 0) {
@@ -223,16 +223,19 @@ function reset() {
     hint.textContent = ""; // Reset hint
     hp_bar.style.width = "100%"; // Reset hp_bar
     hp_label.textContent = "100%"; // Reset hp_label
-    score.textContent = "0"; // Reset score
 }
 
 // Reset score funciton
 function resetPoints() {
     points = 0; // Reset points
     targetPoints = 0; // Reset points' target
+    score.textContent = "0"; // Reset score
 }
 
 //! Events
+// Execute when page is loaded
+window.onload = displayHighScore();
+
 // Submit button
 submit.addEventListener('click', () => {
     // Check if user is dead or submitCooldown is on
@@ -243,24 +246,29 @@ submit.addEventListener('click', () => {
         // Execute after a given time
         setTimeout(() => {
             submitCooldown = false; // Reset submitCooldown
-        }, 300);
+        }, 350);
         // console.log(targetHp);
     }
 });
 
 // Game Over buttons' functions
 menu.addEventListener('click', () => {
-    deadSound.pause();
+    displayHighScore(); // Display highScore in menu
+    deadSound.pause(); // Pause gameOver muscic
+
+    // Return to menu
     stopGame();
     startGame();
 });
 
 restart.addEventListener('click', () => {
-    deadSound.pause();
+    deadSound.pause(); // Pause gameOver muscic
+    bgMusic.currentTime = 0.3; // Set bgMusic to beginning
+    bgMusic.play(); // Start bgMusic
+    setAnswer(); // Set new answer
+
+    // Start new game
     stopGame();
-    bgMusic.currentTime = 0.3;
-    bgMusic.play();
-    setAnswer();
 })
 
 // Setting difficulty
@@ -268,7 +276,7 @@ easyMode.addEventListener('click', () => {
     bgMusic.currentTime = 0.3; // Set bgMusic to beginning
     dmg = 10; // Set easy mode dmg
     addPoints = 100; // Set easy mode points
-    toAdd = 1;
+    toAdd = 1; // Set poitns added per tick
     bgMusic.play(); // Play bgMusic
     startGame(); // Start game
     setAnswer(); // Set answer
@@ -278,7 +286,7 @@ normalMode.addEventListener('click', () => {
     bgMusic.currentTime = 0.3; // Set bgMusic to beginning
     dmg = 13; // Set normal mode dmg
     addPoints = 200; // Set normal mode points
-    toAdd = 2;
+    toAdd = 2; // Set poitns added per tick
     bgMusic.play(); // Play bgMusic
     startGame(); // Start game
     setAnswer(); // Set answer
@@ -288,7 +296,7 @@ hardMode.addEventListener('click', () => {
     bgMusic.currentTime = 0.3; // Set bgMusic to beginning
     dmg = 17; // Set hard mode dmg
     addPoints = 400; // Set hard mode points
-    toAdd = 4;
+    toAdd = 4; // Set poitns added per tick
     bgMusic.play(); // Play bgMusic
     startGame(); // Start game
     setAnswer(); // Set answer
