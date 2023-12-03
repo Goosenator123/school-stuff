@@ -1,4 +1,5 @@
 // Get references to HTML elements
+const guess = document.getElementById("guess");
 const hp_bar = document.getElementById("hp-bar");
 const hp_label = document.getElementById("hp-label");
 const hint = document.getElementById("hint");
@@ -106,13 +107,22 @@ function checkDead() {
 
 // checkAnswer function
 function checkAnswer() {
-    // Get guess value from HTML input
-    const guess = document.getElementById("guess").value;
+    // Get guess input from HTML
+    const guessInput = document.getElementById("guess");
+
+    // Get guess value from HTML
+    const guess = guessInput.value;
+
+    // Reset guessInput value to reset HTML guess input
+    const resetGuess = () => {
+        guessInput.value = "";
+    }
 
     // Check if valid input
     if (guess < 1 || guess > 100 || guess === "") {
         hint.textContent = "The number is from 1 to 100!";
         hint.style.color = "yellow";
+        resetGuess();
         // console.log("invalid");
     } else {
 
@@ -121,6 +131,7 @@ function checkAnswer() {
             hint.textContent = "Lower";
             hint.style.color = "aqua";
             decreaseHp();
+            resetGuess();
             // return true;
             // console.log("lower");
         
@@ -129,6 +140,7 @@ function checkAnswer() {
             hint.textContent = "Higher";
             hint.style.color = "orange";
             decreaseHp();
+            resetGuess();
             // return true;
             // console.log("higher");
 
@@ -201,6 +213,28 @@ function displayHighScore() {
     }
 }
 
+// Submit answer functions
+function submitAnswer() {
+    // Check if user is dead or submitCooldown is on
+    if (!submitCooldown && targetHp > 0) {
+        checkAnswer(); // Check Answer
+        submitCooldown = true; // Set submitCooldown
+
+        // Execute after a given time
+        setTimeout(() => {
+            submitCooldown = false; // Reset submitCooldown
+        }, 350);
+        // console.log(targetHp);
+    }
+}
+
+function submitAnswerWithEnter(event) {
+    // Check if keypressed is enter key (keycode = 13)
+    if (event.keyCode === 13) {
+        submitAnswer();
+    }
+}
+
 // Set answer function
 function setAnswer() {
     // Set random full number from 1 to 100
@@ -236,22 +270,13 @@ function resetPoints() {
 // Execute when page is loaded
 window.onload = displayHighScore();
 
-// Submit button
-submit.addEventListener('click', () => {
-    // Check if user is dead or submitCooldown is on
-    if (!submitCooldown && targetHp > 0) {
-        checkAnswer(); // Check Answer
-        submitCooldown = true; // Set submitCooldown
+// Submit events
+submit.addEventListener('click', submitAnswer);
+guess.addEventListener("keydown", submitAnswerWithEnter);
 
-        // Execute after a given time
-        setTimeout(() => {
-            submitCooldown = false; // Reset submitCooldown
-        }, 350);
-        // console.log(targetHp);
-    }
-});
+// 
 
-// Game Over buttons' functions
+// Game Over buttons' events
 menu.addEventListener('click', () => {
     displayHighScore(); // Display highScore in menu
     deadSound.pause(); // Pause gameOver muscic
@@ -271,7 +296,7 @@ restart.addEventListener('click', () => {
     stopGame();
 })
 
-// Setting difficulty
+// Setting difficulty events
 easyMode.addEventListener('click', () => {
     bgMusic.currentTime = 0.3; // Set bgMusic to beginning
     dmg = 10; // Set easy mode dmg
